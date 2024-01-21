@@ -8,6 +8,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReservationsRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource]
 class Reservations
 {
@@ -35,6 +36,18 @@ class Reservations
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated_at = null;
 
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updateTimestamps(): void
+    {
+        $this->updated_at = new \DateTime();
+
+        // Ne met à jour created_at que lors de la création de l'entité
+        if ($this->created_at === null) {
+            $this->created_at = new \DateTime();
+        }
+    }
     public function getId(): ?int
     {
         return $this->id;

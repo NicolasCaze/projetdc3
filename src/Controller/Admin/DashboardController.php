@@ -3,8 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Attachments;
+use App\Entity\Menus;
 use App\Entity\ProductCategories;
 use App\Entity\Products;
+use App\Entity\Reservations;
 use App\Entity\Settings;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -58,10 +60,12 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         
         yield MenuItem::section('Données');
-        yield MenuItem::linkToCrud('User', 'fa-solid fa-user', User::class);
-        yield MenuItem::linkToCrud('Products', 'fa-solid fa-box-archive', Products::class);
+        yield MenuItem::linkToCrud('Users', 'fa-solid fa-user', User::class);
+        yield MenuItem::linkToCrud('Menus', 'fa-solid fa-clipboard', Menus::class);
+        yield MenuItem::linkToCrud('Reservations', 'fa-solid fa-utensils', Reservations::class);
 
         yield MenuItem::section('Sous-données');
+        yield MenuItem::linkToCrud('Products', 'fa-solid fa-box-archive', Products::class);
         yield MenuItem::linkToCrud('ProductCategories', 'fa-solid fa-boxes-stacked', ProductCategories::class);
         yield MenuItem::linkToCrud('Attachments', 'fa-solid fa-image', Attachments::class);
         yield MenuItem::linkToCrud('Settings', 'fa-solid fa-gear', Settings::class);
