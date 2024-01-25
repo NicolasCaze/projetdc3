@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Reservations;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
@@ -27,6 +28,8 @@ class ReservationsCrudController extends AbstractCrudController
             DateField::new(propertyName: 'requested_date'),
             IntegerField::new(propertyName: 'quantity'),
             TextField::new(propertyName: 'comment'),
+            BooleanField::new(propertyName: 'indoor'),
+            BooleanField::new(propertyName: 'outdoor'),
         ];
     }
     

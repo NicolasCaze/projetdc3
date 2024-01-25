@@ -31,9 +31,25 @@ class ReservationsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $manager ->persist($reservation);
-            $manager->flush();
+            $formData = $form->getData();
+    
+            $requestedDate = $formData->getRequestedDate();
+            $isIndoor = $formData->isIndoor();
+        
+            $availableSeats = $isIndoor ? $formData->getIndoorSeats() : $formData->getOutdoorSeats();
+            $requestedSeats = $formData->getQuantity();
+        
+            if ($requestedSeats > $availableSeats) {
+                $this->addFlash('error', 'Désolé, il n\'y a pas assez de places disponibles.');
+                return $this->redirectToRoute('app_reservations');
+            }
             
+            $formData->setIndoorSeats($isIndoor ? ($availableSeats - $requestedSeats) : $formData->getIndoorSeats());
+            $formData->setOutdoorSeats($isIndoor ? $formData->getOutdoorSeats() : ($availableSeats - $requestedSeats));
+        
+            $manager->persist($reservation);
+            $manager->flush();
+        
             return $this->redirectToRoute('app_reservation_success');
         }
 

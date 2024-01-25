@@ -36,6 +36,42 @@ class Reservations
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated_at = null;
 
+    #[ORM\Column]
+    private ?bool $indoor = null;
+
+    #[ORM\Column]
+    private ?bool $outdoor = null;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $indoorSeats = null;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $outdoorSeats = null;
+
+
+    public function getIndoorSeats(): ?int
+    {
+        return $this->indoorSeats;
+    }
+
+    public function setIndoorSeats(?int $indoorSeats): self
+    {
+        $this->indoorSeats = $indoorSeats;
+
+        return $this;
+    }
+
+    public function getOutdoorSeats(): ?int
+    {
+        return $this->outdoorSeats;
+    }
+
+    public function setOutdoorSeats(?int $outdoorSeats): self
+    {
+        $this->outdoorSeats = $outdoorSeats;
+
+        return $this;
+    }
 
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
@@ -121,6 +157,30 @@ class Reservations
     public function setUpdatedAt(\DateTimeInterface $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function isIndoor(): ?bool
+    {
+        return $this->indoor;
+    }
+
+    public function setIndoor(bool $indoor): static
+    {
+        $this->indoor = $indoor;
+
+        return $this;
+    }
+
+    public function isOutdoor(): ?bool
+    {
+        return $this->outdoor;
+    }
+
+    public function setOutdoor(bool $outdoor): static
+    {
+        $this->outdoor = $outdoor;
 
         return $this;
     }
