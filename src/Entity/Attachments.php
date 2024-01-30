@@ -5,8 +5,13 @@ namespace App\Entity;
 use App\Repository\AttachmentsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: AttachmentsRepository::class)]
+#[Vich\Uploadable]
+#[ORM\HasLifecycleCallbacks]
 class Attachments
 {
     #[ORM\Id]
@@ -21,7 +26,7 @@ class Attachments
     private ?string $filepath = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $filesize = null;
+    private ?int $filesize = null;
 
     #[ORM\Column(length: 255)]
     private ?string $mime_type = null;
@@ -35,6 +40,24 @@ class Attachments
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated_at = null;
 
+    #[Vich\UploadableField(mapping: 'attachments', fileNameProperty: 'filepath', size: 'filesize')]
+    private ?File $file = null;
+
+    
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+        public function updateTimestamps(): void
+    {
+        // Ne met à jour created_at que lors de la création de l'entité
+        if ($this->created_at === null) {
+            $this->created_at = new \DateTime();
+            $this->updated_at = new \DateTime();
+        }
+    }
+    public function __toString()
+    {
+        return $this->filename;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -57,19 +80,19 @@ class Attachments
         return $this->filepath;
     }
 
-    public function setFilepath(string $filepath): static
+    public function setFilepath(string $filepath): self
     {
         $this->filepath = $filepath;
 
         return $this;
     }
 
-    public function getFilesize(): ?string
+    public function getFilesize(): ?int
     {
         return $this->filesize;
     }
 
-    public function setFilesize(string $filesize): static
+    public function setFilesize(int $filesize): static
     {
         $this->filesize = $filesize;
 
@@ -121,6 +144,21 @@ class Attachments
     {
         $this->updated_at = $updated_at;
 
+        return $this;
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    public function setFile(File|UploadedFile|null $file): Attachments
+    {
+        $this->file = $file;
+    
+        if (null !== $file) {
+            $this->updated_at = new \DateTime();
+            }
         return $this;
     }
 }

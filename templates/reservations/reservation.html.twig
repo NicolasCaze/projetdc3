@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+            
+            {{ encore_entry_link_tags('reservation') }}
+        {% endblock %}
+
+ 
+
+{% block title %}Réservation{% endblock %}
+
+  
+{% block body %}
+    <div>
+        <h1>Réserver</h1>
+    </div>
+
+    {% set errors = app.session.getFlashBag().get('error') %}
+    {% if errors is not empty %}
+        <div class="flash-error">
+            {{ errors[0] }}
+        </div>
+    {% endif %}
+
+    {{ form_start(form, {'attr': {'id': 'idform'}}) }}
+    
+    {{ form_widget(form) }}
+
+    <button type="submit">Valider la réservation</button>
+    
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+            {{ encore_entry_script_tags('reservation') }}
+        {% endblock %}
+
