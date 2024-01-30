@@ -5,9 +5,7 @@
             {{ encore_entry_link_tags('reservation') }}
         {% endblock %}
 
- {% block javascripts %}
-            {{ encore_entry_script_tags('reservation') }}
-        {% endblock %}
+ 
 
 {% block title %}Réservation{% endblock %}
 
@@ -17,7 +15,14 @@
         <h1>Réserver</h1>
     </div>
 
-    {{ form_start(form) }}
+    {% set errors = app.session.getFlashBag().get('error') %}
+    {% if errors is not empty %}
+        <div class="flash-error">
+            {{ errors[0] }}
+        </div>
+    {% endif %}
+
+    {{ form_start(form, {'attr': {'id': 'idform'}}) }}
     
     {{ form_widget(form) }}
 
@@ -25,3 +30,7 @@
     
     {{ form_end(form) }}
 {% endblock %}
+{% block javascripts %}
+            {{ encore_entry_script_tags('reservation') }}
+        {% endblock %}
+

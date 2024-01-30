@@ -26,22 +26,12 @@ class ReservationsType extends AbstractType
             ['attr' => ['placeholder' => "Nombre de personnes"], 
             'label' => false, 
             'required' => false,])
-            ->add('requested_date', DateTimeType::class, 
-            ['attr' => ['placeholder' => "Date de la réservation"], 
-            'label' => false,
-            'widget' => 'choice',
-                'format' => 'dd/MM/yyyy', 
-                'html5' => false,
-                'years' => range(date('Y'), date('Y')), 
-                'months' => range(1, 12), 
-                'days' => range(1, 31), 
-                'hours' => range(11, 14),
-                'minutes' => [0, 15, 30, 45], 
-                'placeholder' => [
-                    'hour' => 'Heure', 'minute' => 'Minute',
-                    'day' => 'Jour', 'month' => 'Mois', 'year' => 'Année',
-                ],
-                'required' => false,
+            ->add('requested_date', DateType::class, 
+            [ 
+                'widget' => 'single_text',
+                'html5' => true,
+                'format' => 'yyyy-MM-dd',
+                'label' => false,   
                 ])
                 ->add('indoor', CheckboxType::class, [
                     'label' => 'À l\'intérieur',

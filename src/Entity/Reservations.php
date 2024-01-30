@@ -42,36 +42,6 @@ class Reservations
     #[ORM\Column]
     private ?bool $outdoor = null;
 
-    #[ORM\Column(type: Types::INTEGER, nullable: true)]
-    private ?int $indoorSeats = null;
-
-    #[ORM\Column(type: Types::INTEGER, nullable: true)]
-    private ?int $outdoorSeats = null;
-
-
-    public function getIndoorSeats(): ?int
-    {
-        return $this->indoorSeats;
-    }
-
-    public function setIndoorSeats(?int $indoorSeats): self
-    {
-        $this->indoorSeats = $indoorSeats;
-
-        return $this;
-    }
-
-    public function getOutdoorSeats(): ?int
-    {
-        return $this->outdoorSeats;
-    }
-
-    public function setOutdoorSeats(?int $outdoorSeats): self
-    {
-        $this->outdoorSeats = $outdoorSeats;
-
-        return $this;
-    }
 
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
@@ -184,4 +154,7 @@ class Reservations
 
         return $this;
     }
+
+   
+    
 }

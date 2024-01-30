@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ReservationsController extends AbstractController
 {
+
+    
     #[Route('/reservations', name: 'app_reservations')]
     public function index(Request $request, EntityManagerInterface $manager)
     {
@@ -25,35 +27,47 @@ class ReservationsController extends AbstractController
         $user = $this->getUser();
         $reservation->setUserId($user);
         // -------- //
-        
+
         $form = $this->createForm(ReservationsType::class, $reservation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
             $formData = $form->getData();
     
             $requestedDate = $formData->getRequestedDate();
+            $quantity = $formData->getQuantity();
             $isIndoor = $formData->isIndoor();
-        
-            $availableSeats = $isIndoor ? $formData->getIndoorSeats() : $formData->getOutdoorSeats();
-            $requestedSeats = $formData->getQuantity();
-        
-            if ($requestedSeats > $availableSeats) {
+            $isOutdoor = $formData->isOutdoor();
+    
+            // Récupérer toutes les réservations existantes pour la date et le type spécifiés
+            $existingReservations = $manager->getRepository(Reservations::class)
+                ->findBy(['requested_date' => $requestedDate, 'indoor' => $isIndoor, 'outdoor' => $isOutdoor]);
+    
+            // Calculer le nombre de places déjà réservées
+            $reservedSeats = 0;
+            foreach ($existingReservations as $existingReservation) {
+                $reservedSeats += $existingReservation->getQuantity();
+            }
+    
+            // Vérifier si la nouvelle réservation peut être effectuée
+            $maxSeats = $isIndoor ? 120 : ($isOutdoor ? 80 : 0);
+            $availableSeats = $maxSeats - $reservedSeats;
+    
+            if ($quantity > $availableSeats) {
+                // Il n'y a pas assez de places disponibles
                 $this->addFlash('error', 'Désolé, il n\'y a pas assez de places disponibles.');
                 return $this->redirectToRoute('app_reservations');
             }
-            
-            $formData->setIndoorSeats($isIndoor ? ($availableSeats - $requestedSeats) : $formData->getIndoorSeats());
-            $formData->setOutdoorSeats($isIndoor ? $formData->getOutdoorSeats() : ($availableSeats - $requestedSeats));
-        
+    
+            // La réservation peut être effectuée, persistez la réservation
+            $reservation->setUserId($user);
             $manager->persist($reservation);
             $manager->flush();
-        
+    
+            // Redirigez vers la page de réussite ou faites ce qui est nécessaire
             return $this->redirectToRoute('app_reservation_success');
         }
-
-
+    
         return $this->render('reservations/reservation.html.twig', ['form' => $form->createView()]);
     }
 
