@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CartController!{% endblock %}
+
+{% block body %}
+    <h1>My Cart</h1>
+    {% if cart|length > 0 %}
+        {% set total = 0 %}
+        {% for item in cart %}
+            {% set total = total + (item.menus.price * item.quantity) %}
+            <h3>{{ item.menus.name }}</h3>
+            <div>{{ (item.menus.price * item.quantity / 100)|number_format(2, '.', '.') }} €</div>
+            <a href="{{ path('app_cart_decrease', {id: item.menus.id}) }}"data-decrement>-</a>
+            <input type="number" value="{{ item.quantity }}" readonly>
+            <a href="{{ path('app_cart_add', {id: item.menus.id})}}"data-increment>+</a>
+            <a href="{{ path('app_cart_removeone', {id: item.menus.id}) }}">Remove</a>
+        {% endfor %}
+        <div>Total: {{ (total / 100)|number_format(2, '.', '.') }} €</div>
+    {% else %}
+        <p>Votre Panier est vide</p>
+    {% endif %}
+{% endblock %}

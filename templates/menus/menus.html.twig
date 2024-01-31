@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Menus{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <h1>Menus</h1>
+</div>
+
+    {% for menu in menus %}
+        <h2>{{ menu.name }}</h2>
+        <div>{{ menu.description|raw }}</div>
+        <p>{{ menu.price / 100|number_format(2, '.', '.') }}</p>
+        <a href="{{ path('app_cart_add', {'id': menu.id}) }}">Add to cart</a>
+    {% endfor %}
+{% endblock %}

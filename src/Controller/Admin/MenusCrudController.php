@@ -24,7 +24,9 @@ class MenusCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
             TextEditorField::new('description'),
-            MoneyField::new(propertyName:'price')->setCurrency('EUR'),
+            MoneyField::new(propertyName:'price')->setCurrency('EUR')
+            ->setStoredAsCents()
+            ->setNumDecimals(2),
             AssociationField::new(propertyName: 'product_id'),
             AssociationField::new(propertyName: 'attachment_id'),
             AssociationField::new(propertyName: 'order_id'),
