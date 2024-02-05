@@ -4,6 +4,9 @@
 
 {% block body %}
     <h1>My Cart</h1>
+
+    {{ form_start(form) }}
+
     {% if cart|length > 0 %}
         {% set total = 0 %}
         {% for item in cart %}
@@ -19,4 +22,6 @@
     {% else %}
         <p>Votre Panier est vide</p>
     {% endif %}
+    <button type="submit">Valider le panier</button>
+    {{ form_end(form) }}
 {% endblock %}

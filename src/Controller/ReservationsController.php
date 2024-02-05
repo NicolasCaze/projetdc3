@@ -18,10 +18,11 @@ class ReservationsController extends AbstractController
     #[Route('/reservations', name: 'app_reservations')]
     public function index(Request $request, EntityManagerInterface $manager)
     {
+        
         if (!$this->getUser()) {
+            $this->addFlash('warning', 'Vous devez d\'abord vous connecter');
             return $this->redirectToRoute('app_login');
         }
-
         $reservation = new Reservations();
         // récupération de l'id utilisateur
         $user = $this->getUser();
@@ -32,6 +33,8 @@ class ReservationsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            
             $formData = $form->getData();
     
             $requestedDate = $formData->getRequestedDate();
@@ -68,6 +71,7 @@ class ReservationsController extends AbstractController
             return $this->redirectToRoute('app_reservation_success');
         }
     
+        
         return $this->render('reservations/reservation.html.twig', ['form' => $form->createView()]);
     }
 
