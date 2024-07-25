@@ -45,7 +45,7 @@ class Menus
 
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
-        public function updateTimestamps(): void
+    public function updateTimestamps(): void
     {
         // Ne met à jour created_at que lors de la création de l'entité
         if ($this->created_at === null) {

@@ -1,27 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!{% endblock %}
+{% block title %}Mon Panier
+{% endblock %}
 
 {% block body %}
-    <h1>My Cart</h1>
+	<h1>Mon Panier</h1>
 
-    {{ form_start(form) }}
-
-    {% if cart|length > 0 %}
-        {% set total = 0 %}
-        {% for item in cart %}
-            {% set total = total + (item.menus.price * item.quantity) %}
-            <h3>{{ item.menus.name }}</h3>
-            <div>{{ (item.menus.price * item.quantity / 100)|number_format(2, '.', '.') }} €</div>
-            <a href="{{ path('app_cart_decrease', {id: item.menus.id}) }}"data-decrement>-</a>
-            <input type="number" value="{{ item.quantity }}" readonly>
-            <a href="{{ path('app_cart_add', {id: item.menus.id})}}"data-increment>+</a>
-            <a href="{{ path('app_cart_removeone', {id: item.menus.id}) }}">Remove</a>
-        {% endfor %}
-        <div>Total: {{ (total / 100)|number_format(2, '.', '.') }} €</div>
-    {% else %}
-        <p>Votre Panier est vide</p>
-    {% endif %}
-    <button type="submit">Valider le panier</button>
-    {{ form_end(form) }}
+	{% if cart|length > 0 %}
+		<form action="{{ path('app_order_create') }}">
+			{% set total = 0 %}
+			{% for item in cart %}
+				{% if item.menus is not null %}
+					{% set total = total + (item.menus.price * item.quantity) %}
+					<h3>{{ item.menus.name }}</h3>
+					<div>{{ (item.menus.price * item.quantity / 100)|number_format(2, '.', '.') }}
+						€</div>
+					<a href="{{ path('app_cart_decrease', {id: item.menus.id}) }}" data-decrement>-</a>
+					<input type="number" value="{{ item.quantity }}" readonly>
+					<a href="{{ path('app_cart_add', {id: item.menus.id}) }}" data-increment>+</a>
+					<a href="{{ path('app_cart_removeone', {id: item.menus.id}) }}">Remove</a>
+				{% else %}
+					<p>Un des éléments de votre panier n'est plus disponible.</p>
+				{% endif %}
+			{% endfor %}
+			<div>Total:
+				{{ (total / 100)|number_format(2, '.', '.') }}
+				€</div>
+			<button type="submit">Valider le panier</button>
+		</form>
+		<form action="{{ path('app_cart_remove') }}" method="post" style="display: inline;">
+			<button type="submit" class="btn btn-danger">Vider le panier</button>
+		</form>
+	{% else %}
+		<p>Votre Panier est vide</p>
+	{% endif %}
 {% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CartController!
+{% endblock %}
+{% block body %}
+	<h1>Moyen de payement</h1>
+	<form method="post" action="{{ path('stripe_payment', {reference: reference}) }}"/>
+	<button type=" submit">Passer au payement</button>
+</form>{% endblock %}

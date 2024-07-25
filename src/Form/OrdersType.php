@@ -14,9 +14,7 @@ class OrdersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('requested_date')
-            ->add('status')
-            ->add('withdrawn_at')
+
         ;
     }
 
@@ -24,6 +22,7 @@ class OrdersType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Orders::class,
+            'user' => []
         ]);
     }
 }

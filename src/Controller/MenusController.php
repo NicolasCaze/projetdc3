@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Menus;
+use App\Entity\Products;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,15 +15,19 @@ class MenusController extends AbstractController
     public function index(EntityManagerInterface $manager): Response
     {
         $menus = $manager->getRepository(Menus::class)
-        ->findAll();
+            ->findAll();
 
-        if (!$menus){
+        if (!$menus) {
             $this->addFlash('error', 'Désolé, il n\'y a aucun menus de disponible');
-            return $this->redirectToRoute('app_home');
+        }
+        $products = $manager->getRepository(Products::class)->findAll();
+        if (!$products) {
+            $this->addFlash('error', 'Désolé, il n\'y a aucun produit de disponible');
         }
 
-        return $this->render('menus/menus.html.twig', [ 
+        return $this->render('menus/menus.html.twig', [
             'menus' => $menus,
+            'products' => $products,
         ]);
     }
 }
