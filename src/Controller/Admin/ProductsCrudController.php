@@ -25,7 +25,9 @@ class ProductsCrudController extends AbstractCrudController
             IdField::new(propertyName:'id')->hideOnForm(),
             TextField::new(propertyName:'name'),
             TextEditorField::new(propertyName:'description'),
-            MoneyField::new(propertyName:'price')->setCurrency('EUR'),
+            MoneyField::new(propertyName:'price')->setCurrency('EUR')
+            ->setStoredAsCents()
+            ->setNumDecimals(2),
             AssociationField::new(propertyName:'category_id'),
             AssociationField::new(propertyName:'thumbnail_id'),
             BooleanField::new(propertyName:'available'),

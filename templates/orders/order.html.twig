@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CartController!
+{% endblock %}
+
+{% block body %}
+	{{ form_start(form, {action:path('app_order_verify')})}}
+	<h1>Récapitulatif de la commande
+		<span>{{ recapCart|length }}</span>
+	</h1>
+
+
+	{% set total = 0 %}
+
+	{% for menu in recapCart %}
+
+
+		<h3>{{ menu.menus.name }}</h3>
+		<p>{{ menu.menus.description }}</p>
+		{% set total = total + (menu.menus.price * menu.quantity) %}
+		<p>Quantité: x
+			{{ menu.quantity }}
+			- Prix du produit:
+			{{ (menu.menus.price / 100)|number_format(2, ',', '.') }}
+			€</p>
+	{% endfor %}
+	<h3>Total:
+		{{ (total / 100)|number_format(2, ',', '.') }}
+		€
+	</h3>
+	<button type="submit">Valider votre commande</button>
+	{{ form_end(form)}}
+{% endblock %}

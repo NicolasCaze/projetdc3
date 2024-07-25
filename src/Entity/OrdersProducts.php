@@ -22,11 +22,14 @@ class OrdersProducts
     #[ORM\JoinColumn(nullable: false)]
     private ?Products $product_id = null;
 
+
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated_at = null;
+
 
     public function getId(): ?int
     {
@@ -80,4 +83,6 @@ class OrdersProducts
 
         return $this;
     }
+
+
 }

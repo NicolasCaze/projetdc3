@@ -25,8 +25,8 @@ class Menus
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column]
-    private ?int $price = null;
+    #[ORM\Column(type: 'float')]
+    private ?float $price = null;
 
     #[ORM\ManyToMany(targetEntity: Products::class)]
     private Collection $product_id;
@@ -45,7 +45,7 @@ class Menus
 
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
-        public function updateTimestamps(): void
+    public function updateTimestamps(): void
     {
         // Ne met à jour created_at que lors de la création de l'entité
         if ($this->created_at === null) {
@@ -90,12 +90,12 @@ class Menus
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): static
+    public function setPrice(float $price): static
     {
         $this->price = $price;
 
