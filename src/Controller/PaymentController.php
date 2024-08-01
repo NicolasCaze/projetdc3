@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Entity\Menus;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use App\Entity\Orders;
 use App\Services\CartService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,7 +24,6 @@ class PaymentController extends AbstractController
     {
         $this->em = $em;
         $this->generator = $generator;
-
     }
 
     #[Route('/order/create-session-stripe/{reference}', name: 'stripe_payment')]
@@ -50,8 +51,6 @@ class PaymentController extends AbstractController
             ];
         }
 
-
-
         \Stripe\Stripe::setApiKey('sk_test_51PfiiKRs76GVw4DFJKKWi6Cs04ZcDsoRAQbX0QvLsqQBbYfAnOwJIkI7Xl9991c3shVjiJU6Qv7StHMSMxTf1qO400WBriHEMn');
         $checkout_session = Session::create([
             'customer_email' => $this->getUser()->getEmail(),
@@ -71,19 +70,55 @@ class PaymentController extends AbstractController
         ]);
         $order->setStripeSessionId($checkout_session->id);
         $this->em->flush();
+
         return $this->redirect($checkout_session->url);
     }
 
     #[Route('/order/success/{reference}', name: 'payment_success')]
-    public function stripeSuccess($reference, CartService $service): Response
+    public function stripeSuccess($reference, CartService $service, MailerInterface $mailer): Response
     {
-        return $this->render('order/success.html.twig');
+        $user = $this->getUser();
+        $order = $this->em->getRepository(Orders::class)->findOneBy(['reference' => $reference]);
+        $userEmail = $user->getEmail();
+        if (!$order) {
+            $this->addFlash('error', 'Commande non trouvée.');
+            return $this->redirectToRoute('app_cart');
+        }
+
+        $emailContent = '<p>Votre commande a bien été prise en compte et sera prête d\'ici 15 min.</p>';
+        $emailContent .= '<p>Détail de votre commande:</p>';
+        $emailContent .= '<ul>';
+        foreach ($order->getRecapDetails()->getValues() as $menus) {
+            $menusData = $this->em->getRepository(Menus::class)->findOneBy(['name' => $menus->getMenus()]);
+            $emailContent .= '<li>';
+            $emailContent .= 'Menu: ' . $menus->getMenus() . '<br>';
+            $emailContent .= 'Quantité: ' . $menus->getQuantity() . '<br>';
+            $emailContent .= 'Prix unitaire: ' . number_format($menusData->getPrice() / 100, 2) . ' €';
+            $emailContent .= '</li>';
+        }
+        $emailContent .= '</ul>';
+
+        $email = (new Email())
+            ->from('no-reply@yourdomain.com')
+            ->to($userEmail)
+            ->subject('Confirmation de votre commande')
+            ->html($emailContent);
+
+        $mailer->send($email);
+
+        // Vider le panier après succès du paiement
+        $service->removeCartAll();
+
+        return $this->render('orders/success.html.twig', [
+            'order' => $order,
+        ]);
     }
 
     #[Route('/order/error/{reference}', name: 'payment_error')]
     public function stripeError($reference, CartService $service): Response
     {
-        return $this->render('order/Error.html.twig');
+        return $this->render('orders/error.html.twig');
     }
 }
+
 

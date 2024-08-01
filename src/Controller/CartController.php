@@ -54,37 +54,4 @@ class CartController extends AbstractController
         return $this->redirectToRoute('app_cart');
     }
 
-    #[Route('/cart/order', name: 'app_cart_order')]
-    public function createOrder(CartService $cartService, EntityManagerInterface $manager): RedirectResponse
-    {
-        $user = $this->getUser();
-
-        if (!$user) {
-            $this->addFlash('warning', 'Vous devez d\'abord vous connecter');
-            return $this->redirectToRoute('app_login');
-        }
-
-        $order = new Orders();
-        $order->setUserId($user);
-        $order->setStatus('pending'); // Set the initial status of the order
-        $order->setRequestedDate(new \DateTime());
-
-        $manager->persist($order);
-        $manager->flush();
-
-        // Add products from cart to order
-        $cartItems = $cartService->getTotal();
-        foreach ($cartItems as $item) {
-            $orderProduct = new OrdersProducts();
-            $orderProduct->setOrderId($order);
-            $orderProduct->setProductId($item['menus']); // Assuming 'menus' is the product entity
-            $orderProduct->setQuantity($item['quantity']); // Add quantity if needed
-
-            $manager->persist($orderProduct);
-        }
-
-        $manager->flush();
-
-        return $this->redirectToRoute('stripe_payment', ['id' => $order->getId()]);
-    }
 }

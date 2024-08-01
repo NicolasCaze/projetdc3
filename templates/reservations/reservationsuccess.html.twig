@@ -1,9 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RéservationSuccess{% endblock %}
+{% block title %}RéservationSuccess
+{% endblock %}
 
 {% block body %}
 
-<h1>Reservation confirmé</h1>
-
+	<h1>Reservation confirmé</h1>
+	<h2>Details de la reservation :</h2>
+	<ul>
+		<li>Date de la reservation:
+			{{ reservation.requestedDate|date('d-m-Y') }}</li>
+		<li>Nombre de personne:
+			{{ reservation.quantity }}</li>
+		<li>Intérieur:
+			{{ reservation.indoor ? 'Oui' : 'Non' }}</li>
+		<li>Extérieur:
+			{{ reservation.outdoor ? 'Oui' : 'Non' }}</li>
+	</ul>
 {% endblock %}
