@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Information du compte
+{% endblock %}
+
+{% block body %}
+	<h1>Information du compte</h1>
+
+	{{ form_start(form) }}
+	<div>
+		{{ form_label(form.email) }}
+		{{ form_widget(form.email, {'attr': {'readonly': true}}) }}
+	</div>
+	<div>
+		{{ form_label(form.lastname) }}
+		{{ form_widget(form.lastname, {'attr': {'readonly': true}}) }}
+	</div>
+	<div>
+		{{ form_label(form.firstname) }}
+		{{ form_widget(form.firstname, {'attr': {'readonly': true}}) }}
+	</div>
+	<div>
+		{{ form_label(form.phone) }}
+		{{ form_widget(form.phone, {'attr': {'readonly': true}}) }}
+	</div>
+	<div>
+		{{ form_label(form.plainPassword) }}
+		{{ form_widget(form.plainPassword, {'attr': {'readonly': true}}) }}
+	</div>
+	<button id="edit-btn" type="button">Modifier</button>
+	<button id="cancel-btn" type="button" style="display: none;">Annuler</button>
+	<button id="save-btn" type="submit" style="display: none;" onclick="return confirm('Voulez-vous vraiment enregistrer les modifications ?')">Enregistrer</button>
+	{{ form_end(form) }}
+
+	<script>
+		document.getElementById('edit-btn').addEventListener('click', function () {
+document.querySelectorAll('input[readonly]').forEach(function (input) {
+input.removeAttribute('readonly');
+});
+document.getElementById('edit-btn').style.display = 'none';
+document.getElementById('save-btn').style.display = 'inline';
+document.getElementById('cancel-btn').style.display = 'inline';
+});
+
+document.getElementById('cancel-btn').addEventListener('click', function () {
+document.querySelectorAll('input').forEach(function (input) {
+input.setAttribute('readonly', true);
+});
+document.getElementById('edit-btn').style.display = 'inline';
+document.getElementById('save-btn').style.display = 'none';
+document.getElementById('cancel-btn').style.display = 'none';
+});
+	</script>
+{% endblock %}

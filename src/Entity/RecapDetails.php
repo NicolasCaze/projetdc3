@@ -34,6 +34,10 @@ class RecapDetails
         return $this->id;
     }
 
+    public function __toString()
+    {
+        return $this->menus;
+    }
     public function getOrderProduct(): ?Orders
     {
         return $this->orderProduct;

@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Attachments;
 use App\Entity\Menus;
+use App\Entity\Orders;
 use App\Entity\ProductCategories;
 use App\Entity\Products;
 use App\Entity\Reservations;
@@ -21,7 +22,7 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-       // return parent::index();
+        // return parent::index();
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
         //
@@ -37,7 +38,7 @@ class DashboardController extends AbstractDashboardController
         // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         //
-         return $this->render('admin/dashboard.html.twig');
+        return $this->render('admin/dashboard.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -46,7 +47,8 @@ class DashboardController extends AbstractDashboardController
             ->setTitle('Le Hameau')
             ->renderContentMaximized();
     }
-    public function configureCrud(): Crud {
+    public function configureCrud(): Crud
+    {
 
         $crud = parent::configureCrud();
 
@@ -58,11 +60,12 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        
+
         yield MenuItem::section('Données');
-        yield MenuItem::linkToCrud('Users', 'fa-solid fa-user', User::class);
+        yield MenuItem::linkToCrud('Utilisateur', 'fa-solid fa-user', User::class);
         yield MenuItem::linkToCrud('Menus', 'fa-solid fa-clipboard', Menus::class);
         yield MenuItem::linkToCrud('Reservations', 'fa-solid fa-utensils', Reservations::class);
+        yield MenuItem::linkToCrud('Commande', 'fa-solid fa-truck-ramp-box', Orders::class);
 
         yield MenuItem::section('Sous-données');
         yield MenuItem::linkToCrud('Products', 'fa-solid fa-box-archive', Products::class);
@@ -70,5 +73,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Attachments', 'fa-solid fa-image', Attachments::class);
         yield MenuItem::linkToCrud('Settings', 'fa-solid fa-gear', Settings::class);
 
-        }
+    }
 }

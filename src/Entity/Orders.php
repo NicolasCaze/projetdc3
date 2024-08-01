@@ -36,7 +36,7 @@ class Orders
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $stripeSessionId = null;
 
-    #[ORM\OneToMany(mappedBy: 'orderProduct', targetEntity: RecapDetails::class)]
+    #[ORM\OneToMany(mappedBy: 'orderProduct', targetEntity: RecapDetails::class, cascade: ['persist', 'remove'])]
     private Collection $recapDetails;
 
     public function __construct()
