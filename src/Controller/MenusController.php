@@ -14,6 +14,10 @@ class MenusController extends AbstractController
     #[Route('/menus', name: 'app_menus')]
     public function index(EntityManagerInterface $manager): Response
     {
+        if (!$this->getUser()) {
+            $this->addFlash('warning', 'Vous devez d\'abord vous connecter');
+            return $this->redirectToRoute('app_login');
+        }
         $menus = $manager->getRepository(Menus::class)
             ->findAll();
 

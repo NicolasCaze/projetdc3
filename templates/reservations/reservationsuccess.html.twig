@@ -4,17 +4,59 @@
 {% endblock %}
 
 {% block body %}
+	<div class="highlight-section">
+		<header class="header">
+			<div class="logo">
+				<img src="{{ asset('/attachments/front/logo.png') }}" alt="Le Hameau Logo">
+			</div>
+			<nav class="nav">
+				<ul>
+					<li><a href="#">Le Restaurant</a></li>
+					<li><a href="#LeCabanon">Le Cabanon</a></li>
+				</ul>
+			</nav>
+			<div class="header-buttons">
+				{% if app.user %}
+					<button class="header-btn">
+						<a href="{{ path('app_logout') }}">
+							<img src="{{ asset('/attachments/front/arrow-door.png') }}" alt="Logout Icon" style="height: 20px; width: 20px; vertical-align: middle;">
+						</a>
+					</button>
+				{% else %}
+					<button class="header-btn">
+						<a href="{{ path('app_login') }}">
+							<img src="{{ asset('/attachments/front/user.png') }}" alt="Login Icon" style="height: 20px; width: 20px; vertical-align: middle;">
+						</a>
+					</button>
+				{% endif %}
+				<button class="header-btn">
+					<img src="{{ asset('/attachments/front/Cart.png') }}" alt="Icon" style="height: 20px; width: 20px; vertical-align: middle;">
+				</button>
+				<a href="http://127.0.0.1:8000/reservations" class="btn-reservation">Réserver</a>
+			</div>
+		</header>
 
-	<h1>Reservation confirmé</h1>
-	<h2>Details de la reservation :</h2>
-	<ul>
-		<li>Date de la reservation:
-			{{ reservation.requestedDate|date('d-m-Y') }}</li>
-		<li>Nombre de personne:
-			{{ reservation.quantity }}</li>
-		<li>Intérieur:
-			{{ reservation.indoor ? 'Oui' : 'Non' }}</li>
-		<li>Extérieur:
-			{{ reservation.outdoor ? 'Oui' : 'Non' }}</li>
-	</ul>
-{% endblock %}
+		<section class="hero-2">
+			<img src="{{ asset('/attachments/front/ImageHeader.png') }}" alt="Hero Image">
+			<div class="hero-text">
+				<h1>CONFIRMATION DE VOTRE RESERVATION</h1>
+			</div>
+		</section>
+		<div class="confirmation-container">
+			<h1>Réservation Confirmée !</h1>
+			<p>Vous avez dû recevoir un email de confirmation sur votre boite mail</p>
+			<a href="/" class="back-link">Retourner à la page d'accueil</a>
+		</div>
+
+		<footer class="footer">
+			<div class="footer-info">
+				<p>ESAT LE HAMEAU</p>
+				<p>27 Av. Larribau, 64000 Pau</p>
+				<p>05 59 80 23 23</p>
+			</div>
+			<div class="footer-buttons">
+				<a href="http://127.0.0.1:8000/reservations">Réserver</a>
+				<a href="http://127.0.0.1:8000/menus">Commander</a>
+			</div>
+		</footer>
+	{% endblock %}

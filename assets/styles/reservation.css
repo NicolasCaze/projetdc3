@@ -1,3 +1,42 @@
-body {
-    
+
+/* Formulaire de réservation */
+#idform {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-width: 900px; /* Ajuste la largeur maximale du formulaire */
+    margin: 0 auto; /* Centre le formulaire horizontalement */
+    margin-bottom: 100px;
+
+}
+
+#idform div {
+    margin-bottom: 20px;
+}
+
+#idform input[type="text"],
+#idform input[type="email"],
+#idform input[type="tel"],
+#idform input[type="date"],
+#idform input[type="number"],
+#idform textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#idform input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+#idform button[type="submit"] {
+    background-color: #008CBA;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
 }

@@ -1,0 +1,109 @@
+.cart-summary {
+    width: 50%;
+    margin: 0 auto;
+    text-align: left;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.cart-summary h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.item-details h3 {
+    font-size: 20px;
+    margin: 0;
+    color: #333;
+}
+
+.item-details div {
+    font-size: 16px;
+    color: #666;
+}
+
+.item-image img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+}
+
+.item-actions {
+    display: flex;
+    align-items: center;
+}
+
+.item-actions .btn-decrement {
+    background-color: #A4B042;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.item-actions .btn-decrement:hover {
+    background-color: #8D983A;
+}
+
+.cart-total {
+    font-size: 20px;
+    text-align: right;
+    margin-top: 20px;
+    color: #333;
+}
+
+.btn-payer {
+    display: block;
+    background-color: #007B8F;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 5px;
+    margin: 20px auto 0;
+    cursor: pointer;
+    width: 150px;
+}
+
+.btn-payer:hover {
+    background-color: #005f6b;
+}
+
+/* Styles déjà définis... */
+
+.btn-vider-panier {
+    display: block;
+    background-color: #B04242;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 5px;
+    margin: 10px auto 0;
+    cursor: pointer;
+    width: 150px;
+}
+
+.btn-vider-panier:hover {
+    background-color: #8F2C2C;
+}

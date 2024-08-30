@@ -1,0 +1,32 @@
+
+
+/* Container pour le message de confirmation */
+.confirmation-container {
+    text-align: center;
+    margin-bottom: 150px;
+}
+
+/* Style pour le titre */
+.confirmation-container h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Style pour le texte explicatif */
+.confirmation-container p {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Style pour le lien de retour */
+.confirmation-container .back-link {
+    font-size: 1em;
+    color: #06809A;
+    text-decoration: none;
+}
+
+.confirmation-container .back-link:hover {
+    text-decoration: underline;
+}

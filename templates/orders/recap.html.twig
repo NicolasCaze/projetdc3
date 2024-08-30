@@ -3,7 +3,50 @@
 {% block title %}Hello CartController!
 {% endblock %}
 {% block body %}
-	<h1>Moyen de payement</h1>
-	<form method="post" action="{{ path('stripe_payment', {reference: reference}) }}"/>
-	<button type=" submit">Passer au payement</button>
-</form>{% endblock %}
+	<div class="highlight-section">
+		<header class="header">
+			<div class="logo">
+				<img src="{{ asset('/attachments/front/logo.png') }}" alt="Le Hameau Logo">
+			</div>
+			<nav class="nav">
+				<ul>
+					<li><a href="http://127.0.0.1:8000/#LeRestaurant">Le Restaurant</a></li>
+					<li><a href="#LeCabanon">Le Cabanon</a></li>
+				</ul>
+			</nav>
+			<div class="header-buttons">
+				<button class="header-btn">
+					<img src="{{ asset('/attachments/front/user.png') }}" alt="Icon" style="height: 20px; width: 20px; vertical-align: middle;">
+				</button>
+				<button class="header-btn">
+					<img src="{{ asset('/attachments/front/Cart.png') }}" alt="Icon" style="height: 20px; width: 20px; vertical-align: middle;">
+				</button>
+				<a href="http://127.0.0.1:8000/reservations" class="btn-reservation">Réserver</a>
+			</div>
+		</header>
+
+		<section class="hero-2">
+			<img src="{{ asset('/attachments/front/ImageHeader.png') }}" alt="Hero Image">
+			<div class="hero-text">
+				<h1>Payement</h1>
+			</div>
+		</section>
+		<div class="payment-page">
+			<form method="post" action="{{ path('stripe_payment', {reference: reference}) }}" class="payment-form">
+				<button type="submit">Passer au paiement</button>
+			</form>
+		</div>
+
+
+		<footer class="footer">
+			<div class="footer-info">
+				<p>ESAT LE HAMEAU</p>
+				<p>27 Av. Larribau, 64000 Pau</p>
+				<p>05 59 80 23 23</p>
+			</div>
+			<div class="footer-buttons">
+				<a href="http://127.0.0.1:8000/reservations">Réserver</a>
+				<a href="http://127.0.0.1:8000/menus">Commander</a>
+			</div>
+		</footer>
+	{% endblock %}

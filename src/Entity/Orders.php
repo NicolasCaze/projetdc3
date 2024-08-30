@@ -57,6 +57,12 @@ class Orders
             $this->created_at = new \DateTime();
         }
     }
+    public function __toString()
+    {
+        // Choisissez la manière dont vous souhaitez représenter un objet Orders en tant que chaîne
+        // Par exemple, vous pouvez utiliser l'identifiant ou un autre attribut pertinent
+        return (string) $this->id; // Ou utilisez une autre propriété comme $this->orderNumber;
+    }
 
     public function getId(): ?int
     {

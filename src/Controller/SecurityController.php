@@ -38,7 +38,7 @@ class SecurityController extends AbstractController
             // the title visible above the login form (define this option only if you are
             // rendering the login template in a regular Symfony controller; when rendering
             // it from an EasyAdmin Dashboard this is automatically set as the Dashboard title)
-            'page_title' => 'login',
+            'page_title' => 'Connexion',
 
             // the string used to generate the CSRF token. If you don't define
             // this parameter, the login form won't include a CSRF token
@@ -48,13 +48,14 @@ class SecurityController extends AbstractController
             'target_path' => $this->generateUrl('admin'),
 
             // the label displayed for the username form field (the |trans filter is applied to it)
-            'username_label' => 'Your email',
+            'username_label' => 'Votre addresse mail',
 
             // the label displayed for the password form field (the |trans filter is applied to it)
-            'password_label' => 'Your password',
+            'password_label' => 'Votre mot de passe',
+
 
             // the label displayed for the Sign In form button (the |trans filter is applied to it)
-            'sign_in_label' => 'Log in',
+            'sign_in_label' => 'Connexion',
 
             // whether to enable or not the "remember me" checkbox (default: false)
             'remember_me_enabled' => true,
@@ -66,7 +67,9 @@ class SecurityController extends AbstractController
             'remember_me_checked' => true,
 
             // the label displayed for the remember me checkbox (the |trans filter is applied to it)
-            'remember_me_label' => 'Remember me',
+            'remember_me_label' => 'Se souvenir de moi',
+            'Inscription_label' => 'S\'inscrire',
+            'Inscription_url' => $this->generateUrl('app_register'),
         ]);
     }
 

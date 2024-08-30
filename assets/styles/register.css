@@ -1,0 +1,96 @@
+/* Style global pour la section d'inscription */
+.registration-page {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+/* Style pour le formulaire d'inscription */
+.registration-form {
+    background-color: white;
+    padding: 25px 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Style pour le titre */
+.registration-form h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Style pour chaque champ du formulaire */
+.registration-form .form-group {
+    margin-bottom: 20px;
+}
+
+/* Style pour les labels des champs */
+.registration-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* Style pour les inputs du formulaire */
+.registration-form input[type="text"],
+.registration-form input[type="email"],
+.registration-form input[type="password"],
+.registration-form input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Style pour le bouton d'inscription */
+.registration-form button.btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #1E90FF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+/* Effet de survol pour le bouton d'inscription */
+.registration-form button.btn:hover {
+    background-color: #1C86EE;
+}
+
+/* Message d'erreur */
+.registration-form .form-error-message {
+    color: #D8000C;
+    background-color: #FFD2D2;
+    border: 1px solid #D8000C;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Ajustements supplémentaires pour mobile */
+@media (max-width: 768px) {
+    .registration-form {
+        padding: 20px;
+    }
+
+    .registration-form h1 {
+        font-size: 22px;
+    }
+
+    .registration-form button.btn {
+        font-size: 14px;
+    }
+}

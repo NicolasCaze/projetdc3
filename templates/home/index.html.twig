@@ -1,25 +1,149 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!
+{% block title %}Le Hameau
 {% endblock %}
 
 {% block body %}
+	<div class="container">
+		<div class="highlight-section">
+			<header class="header">
+				<div class="logo">
+					<img src="{{ asset('/attachments/front/logo.png') }}" alt="Le Hameau Logo">
+				</div>
+				<nav class="nav">
+					<ul>
+						<li><a href="#LeRestaurant">Le Restaurant</a></li>
+						<li><a href="#LeCabanon">Le Cabanon</a></li>
+					</ul>
+				</nav>
+				<div class="header-buttons">
+					{% if app.user %}
+						<button class="header-btn">
+							<a href="{{ path('app_logout') }}">
+								<img src="{{ asset('/attachments/front/arrow-door.png') }}" alt="Logout Icon" style="height: 20px; width: 20px; vertical-align: middle;">
+							</a>
+						</button>
+					{% else %}
+						<button class="header-btn">
+							<a href="{{ path('app_login') }}">
+								<img src="{{ asset('/attachments/front/user.png') }}" alt="Login Icon" style="height: 20px; width: 20px; vertical-align: middle;">
+							</a>
+						</button>
+					{% endif %}
+					<button class="header-btn">
+						<img src="{{ asset('/attachments/front/Cart.png') }}" alt="Icon" style="height: 20px; width: 20px; vertical-align: middle;">
+					</button>
+					<a href="{{ path('app_reservations') }}" class="btn-reservation">Réserver</a>
+				</div>
 
-	<div>
-		<h1>Le Hameau</h1>
-	</div>
+			</header>
 
-	<h1>Subscribe to our Newsletter</h1>
+			<section class="hero">
+				<img src="{{ asset('/attachments/front/ImageHeader.png') }}" alt="Hero Image">
+				<div class="hero-text">
+					<h1>LE HAMEAU</h1>
+					<p>Où la passion culinaire rencontre l'inclusion sociale</p>
+					<a href="http://127.0.0.1:8000/reservations" class="btn-primary">Réserver</a>
+				</div>
+			</section>
 
-	{{ form_start(form) }}
-	{{ form_row(form.email) }}
-	<button class="btn">S'abonner</button>
-	{{ form_end(form) }}
-
-	{# Affichage des messages flash #}
-	{% for message in app.flashes('success') %}
-		<div class="alert alert-success">
-			{{ message }}
+			<section id="LeRestaurant" class="hero-description">
+				<p>
+					Situé à Pau, notre restaurant inclusif d'économie sociale et solidaire emploie 70% de personnes porteuses d'un handicap invisible. Nous sommes fiers de contribuer à l'insertion professionnelle et à la valorisation des compétences de chacun.
+				</p>
+			</section>
 		</div>
-	{% endfor %}
+
+
+		<section class="details">
+			<div class="details-image">
+				<img src="{{ asset('/attachments/front/image6.png') }}" alt="Le Cabanon">
+			</div>
+			<div class="details-text">
+				<h2>Notre cuisine</h2>
+				<p>
+					Nous vous proposons une cuisine de saison authentique et savoureuse, élaborée à partir de produits frais et locaux, sélectionnés avec soin auprès de nos partenaires producteurs. Notre équipe de salle et de cuisine, en majorité en situation de handicap, est fière de travailler dans un cadre respectueux de l'environnement et de l'économie solidaire et responsable.
+				</p>
+				<h2>Accueil</h2>
+				<p>
+					L'équipe chaleureuse de l'Esat Le Hameau vous accueille pour vos déjeuners d'affaires, séminaires, soirées d'entreprise, journées de team building et autres événements privés.
+				</p>
+				<p>
+					Découvrez notre espace événementiel et notre terrasse ombragée, parfaits pour vos événements estivaux. Faites-nous part de vos besoins et nous créerons ensemble des moments inoubliables.
+				</p>
+				<a href="#" class="btn-primary-green">Découvrir notre carte</a>
+			</div>
+		</section>
+
+		<section class="infos">
+			<div class="infos-column">
+				<h3>Infos pratiques</h3>
+				<ul>
+					<li>Cuisine: Brasserie</li>
+					<li>Services: Privatisation, Climatisation, Terrasse, Accès aux personnes à mobilité réduite</li>
+					<li>Mode de paiement: Carte Bancaire, Espèces, Chèques</li>
+				</ul>
+			</div>
+			<div class="infos-column">
+				<h3>Horaires</h3>
+				<ul>
+					<li>Lundi: Fermé</li>
+					<li>Mardi - Jeudi: 12:00 - 14:30 / 19:00 - 22:00</li>
+					<li>Vendredi: 12:00 - 14:30 / 19:00 - 22:30</li>
+					<li>Samedi: 12:00 - 14:30 / 19:00 - 22:30</li>
+					<li>Dimanche: 12:00 - 14:30</li>
+				</ul>
+			</div>
+		</section>
+
+		<section class="newsletter">
+			<h2>Newsletter</h2>
+			<p>En vous inscrivant à notre newsletter, vous acceptez de recevoir des communications et des offres marketing personnalisées par mail.</p>
+
+			{{ form_start(form) }}
+			{{ form_row(form.email) }}
+			<button class="newsletter-btn">S'abonner</button>
+			{{ form_end(form) }}
+
+			{% if app.flashes('success') is not empty %}
+				{% for message in app.flashes('success') %}
+					<div class="alert-success">
+						{{ message }}
+					</div>
+				{% endfor %}
+			{% endif %}
+		</section>
+
+		<section class="cabanon" id="LeCabanon">
+			<div class="cabanon-text">
+				<h2>Le Cabanon</h2>
+				<p>
+					Vous êtes pressé et vous voulez manger rapidement, le Cabanon est fait pour vous.
+																																																																																																																																																																																																																							Découvrez notre Cabanon, un espace de restauration rapide et convivial, idéal pour les petites faims ou les pauses déjeuner sur le pouce.
+																																																																																																																																																																																																																							Notre offre de snacking gourmand et équilibré saura satisfaire toutes les envies : sandwichs frais et généreux, salades composées à base de produits locaux, quiches et tartes faites maison, sans oublier nos délicieux desserts pour une touche sucrée.
+																																																																																																																																																																																																																							Le Cabanon de l'Esat Le Hameau, c'est aussi l'assurance d'une restauration rapide de qualité, préparée avec soin par notre équipe de professionnels engagés dans une démarche solidaire et responsable.
+																																																																																																																																																																																																																							Installez-vous confortablement sur notre terrasse ombragée ou emportez votre commande pour une pause déjeuner en toute liberté.
+				</p>
+				<a href="http://127.0.0.1:8000/menus" class="btn-primary">Commander</a>
+			</div>
+			<div class="cabanon-image">
+				<img src="{{ asset('/attachments/front/image7.png') }}" alt="Le Cabanon">
+			</div>
+		</section>
+
+
+		<footer class="footer">
+			<div class="footer-info">
+				<p>ESAT LE HAMEAU</p>
+				<p>27 Av. Larribau, 64000 Pau</p>
+				<p>05 59 80 23 23</p>
+			</div>
+			<div class="footer-buttons">
+				<a href="http://127.0.0.1:8000/reservations">Réserver</a>
+				<a href="http://127.0.0.1:8000/menus">Commander</a>
+			</div>
+		</footer>
+
+
+	</div>
 {% endblock %}

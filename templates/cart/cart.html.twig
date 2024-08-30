@@ -4,34 +4,92 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Mon Panier</h1>
-
-	{% if cart|length > 0 %}
-		<form action="{{ path('app_order_create') }}">
-			{% set total = 0 %}
-			{% for item in cart %}
-				{% if item.menus is not null %}
-					{% set total = total + (item.menus.price * item.quantity) %}
-					<h3>{{ item.menus.name }}</h3>
-					<div>{{ (item.menus.price * item.quantity / 100)|number_format(2, '.', '.') }}
-						€</div>
-					<a href="{{ path('app_cart_decrease', {id: item.menus.id}) }}" data-decrement>-</a>
-					<input type="number" value="{{ item.quantity }}" readonly>
-					<a href="{{ path('app_cart_add', {id: item.menus.id}) }}" data-increment>+</a>
-					<a href="{{ path('app_cart_removeone', {id: item.menus.id}) }}">Remove</a>
+	<div class="highlight-section">
+		<header class="header">
+			<div class="logo">
+				<img src="{{ asset('/attachments/front/logo.png') }}" alt="Le Hameau Logo">
+			</div>
+			<nav class="nav">
+				<ul>
+					<li><a href="http://127.0.0.1:8000/#LeRestaurant">Le Restaurant</a></li>
+					<li><a href="#LeCabanon">Le Cabanon</a></li>
+				</ul>
+			</nav>
+			<div class="header-buttons">
+				{% if app.user %}
+					<button class="header-btn">
+						<a href="{{ path('app_logout') }}">
+							<img src="{{ asset('/attachments/front/arrow-door.png') }}" alt="Logout Icon" style="height: 20px; width: 20px; vertical-align: middle;">
+						</a>
+					</button>
 				{% else %}
-					<p>Un des éléments de votre panier n'est plus disponible.</p>
+					<button class="header-btn">
+						<a href="{{ path('app_login') }}">
+							<img src="{{ asset('/attachments/front/user.png') }}" alt="Login Icon" style="height: 20px; width: 20px; vertical-align: middle;">
+						</a>
+					</button>
 				{% endif %}
-			{% endfor %}
-			<div>Total:
-				{{ (total / 100)|number_format(2, '.', '.') }}
-				€</div>
-			<button type="submit">Valider le panier</button>
-		</form>
-		<form action="{{ path('app_cart_remove') }}" method="post" style="display: inline;">
-			<button type="submit" class="btn btn-danger">Vider le panier</button>
-		</form>
-	{% else %}
-		<p>Votre Panier est vide</p>
-	{% endif %}
-{% endblock %}
+				<button class="header-btn">
+					<img src="{{ asset('/attachments/front/Cart.png') }}" alt="Icon" style="height: 20px; width: 20px; vertical-align: middle;">
+				</button>
+				<a href="http://127.0.0.1:8000/reservations" class="btn-reservation">Réserver</a>
+			</div>
+		</header>
+
+		<section class="hero-2">
+			<img src="{{ asset('/attachments/front/ImageHeader.png') }}" alt="Hero Image">
+			<div class="hero-text">
+				<h1>Votre Panier</h1>
+			</div>
+		</section>
+
+		{% if cart|length > 0 %}
+			<form action="{{ path('app_order_create') }}">
+				{% set total = 0 %}
+				<div class="cart-summary">
+					<h2>Récapitulatif de la commande</h2>
+					{% for item in cart %}
+						{% if item.menus is not null %}
+							{% set total = total + (item.menus.price * item.quantity) %}
+							<div class="cart-item">
+								<div class="item-details">
+									<h3>{{ item.menus.name }}</h3>
+									<div>{{ (item.menus.price * item.quantity / 100)|number_format(2, '.', '.') }}€</div>
+								</div>
+								{# <div class="item-image">
+																																	<img src="{{ asset('attachments/' ~ item.menus.imagePath) }}" alt="{{ item.menus.name }}">
+																																</div> #}
+								<div class="item-actions">
+									<a href="{{ path('app_cart_decrease', {id: item.menus.id}) }}" class="btn-decrement">-</a>
+								</div>
+							</div>
+						{% else %}
+							<p>Un des éléments de votre panier n'est plus disponible.</p>
+						{% endif %}
+					{% endfor %}
+					<div class="cart-total">
+						<strong>Total:
+							{{ (total / 100)|number_format(2, '.', '.') }}€</strong>
+					</div>
+					<button type="submit" class="btn-payer">Payer</button>
+					<form action="{{ path('app_cart_remove') }}" method="post" style="display: inline;">
+						<button type="submit" class="btn-vider-panier">Vider le panier</button>
+					</form>
+				</div>
+			</form>
+		{% else %}
+			<p>Votre Panier est vide</p>
+		{% endif %}
+
+		<footer class="footer">
+			<div class="footer-info">
+				<p>ESAT LE HAMEAU</p>
+				<p>27 Av. Larribau, 64000 Pau</p>
+				<p>05 59 80 23 23</p>
+			</div>
+			<div class="footer-buttons">
+				<a href="http://127.0.0.1:8000/reservations">Réserver</a>
+				<a href="http://127.0.0.1:8000/menus">Commander</a>
+			</div>
+		</footer>
+	{% endblock %}

@@ -1,0 +1,85 @@
+/* Récapitulatif de la commande CSS */
+.recap-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.recap-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.recap-container h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #555;
+}
+
+.recap-container p {
+    font-size: 16px;
+    color: #666;
+    margin: 5px 0;
+}
+
+.recap-container .quantity,
+.recap-container .price {
+    font-weight: bold;
+    color: #333;
+}
+
+.recap-container .total {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: right;
+    color: #000;
+}
+
+.recap-container button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.recap-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .recap-container {
+        padding: 15px;
+    }
+
+    .recap-container h1 {
+        font-size: 20px;
+    }
+
+    .recap-container h3 {
+        font-size: 16px;
+    }
+
+    .recap-container p {
+        font-size: 14px;
+    }
+
+    .recap-container button {
+        font-size: 16px;
+    }
+}
